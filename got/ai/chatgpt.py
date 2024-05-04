@@ -9,15 +9,16 @@ from got.printer import Printer
 
 load_dotenv()
 printer = Printer()
-CHAT_GPT_TOKEN = os.getenv("CHAT_GPT_TOKEN")
-
-client = OpenAI(api_key=CHAT_GPT_TOKEN)
 
 
 class ChatGPT(AI):
     def __init__(self, model) -> None:
         self.model = model
         self.messages = []
+        CHAT_GPT_TOKEN = os.getenv("CHAT_GPT_TOKEN")
+        if not CHAT_GPT_TOKEN:
+            raise ValueError("CHAT_GPT_TOKEN is not set in the environment variables")
+        self.client = OpenAI(api_key=CHAT_GPT_TOKEN)
 
     def add_message(self, content: str, role: str = "user") -> None:
         if isinstance(content, dict) or isinstance(content, list):
@@ -27,7 +28,7 @@ class ChatGPT(AI):
 
     def prompt(self) -> str:
         printer.start_spinner("Creating commit messages...")
-        response = client.chat.completions.create(
+        response = self.client.chat.completions.create(
             model=self.model,
             messages=self.messages,
             response_format={"type": "json_object"},
