@@ -2,9 +2,8 @@ import os
 import click
 from InquirerPy import inquirer
 from InquirerPy.separator import Separator
-from prompt_toolkit import prompt
 from prompt_toolkit.history import InMemoryHistory
-
+import prompt_toolkit
 from got.commit import CommitHandler
 from got.git import Git
 from got.printer import Printer
@@ -69,7 +68,7 @@ def commit(a, p, m):
 
         if commit_message == "Manual":
             printer.br()
-            commit_message = prompt("Enter a commit message: ")
+            commit_message = prompt_toolkit.prompt("Enter a commit message: ")
 
         else:
             change_commit_message = inquirer.select(
@@ -81,7 +80,7 @@ def commit(a, p, m):
                 history = InMemoryHistory()
                 history.append_string(commit_message)
                 click.echo()
-                commit_message = prompt("", default=commit_message, history=history)
+                commit_message = prompt_toolkit.prompt("", default=commit_message, history=history)
 
         git.add_commit({"files_to_commit": commit["files"], "message": commit_message})
 
@@ -100,10 +99,14 @@ def commit(a, p, m):
         printer.print("Message:", "white", 1, 1)
         printer.print(f"  {commit['message']}", "yellow")
 
-    click.echo()
 
-    if click.confirm("Would you like to proceed?", default="Y", abort=True):
+    try:
+        printer.br()
+        click.confirm("Would you like to proceed?", default="Y", abort=True)
         git.commit()
+    except click.Abort:
+        printer.print("Aborted!", "red", 1, 1)
+        exit()
 
     if p:
         git.push()
