@@ -1,0 +1,7 @@
+[
+  "feat(scope): add new feature for X",
+  "fix(scope): address bug in Y",
+  "refactor(scope): improve code readability",
+  "style(scope): update formatting",
+  "docs(scope): enhance comments"
+]
