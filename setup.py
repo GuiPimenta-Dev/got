@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="got",
-    version="0.0.1",
+    version="0.0.3",
     packages=find_packages(),
     license="MIT",
     install_requires=[
