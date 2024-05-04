@@ -1,5 +1,6 @@
-I need your assistance to generate commit messages for a set of changes I'm about to make. I will provide you with the details of the files and their contents in JSON format. For each logically grouped set of files, please suggest 5 distinct commit messages that accurately reflect the changes.
-  
+I need your help to generate commit messages using the Angular commit message convention for a series of code changes. I will provide you with the details of the file changes in JSON format. Each entry represents a group of logically related file changes, and for each group, I require five distinct commit messages that effectively capture the essence of the changes.
+
+
   Here is the format in which I will send you the file details:
   ```json
   {
@@ -9,9 +10,14 @@ I need your assistance to generate commit messages for a set of changes I'm abou
     "diff": "diff from current content from previous, if there is some"
   }
   ```
-  Based on the content of these files, I would like you to use the Angular commit message convention to suggest commit messages. Each suggestion should contain a group of related files along with 5 commit messages that describe the changes comprehensively.
+
+Please focus primarily on the `commit` key as it reflects the current changes being made. The `previous_commit` and `diff` keys are provided to give context and help you understand the progression of the changes.
+
+If two or more files have related changes, please merge them together in one single commit!
+
+Your response should also be in JSON format, containing a list of file groups with their associated commit messages. Here’s how the response should be structured:
   
-  The response should also be in JSON format, structured as follows: {
+{
     "commits": [
       {
         "files": [
