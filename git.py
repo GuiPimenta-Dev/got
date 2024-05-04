@@ -1,5 +1,9 @@
 import subprocess
 
+from printer import Printer
+
+printer = Printer()
+
 class Git:
   
   def __init__(self):
@@ -17,6 +21,10 @@ class Git:
       staged_files = result.stdout.strip().split('\n')
       staged_files = [file for file in staged_files if file]
       
+      if not staged_files:
+        printer.print("No files are staged for commit.", "red", 1 , 1)
+        exit()
+        
       return staged_files
     except subprocess.CalledProcessError as e:
       print(f"An error occurred while trying to get staged files: {e}")
