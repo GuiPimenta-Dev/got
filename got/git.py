@@ -18,7 +18,7 @@ class Git:
             print(f"An error occurred while trying to add files to stage: {e}")
             return False
         return True
-    
+
     @staticmethod
     def get_staged_files():
         try:
