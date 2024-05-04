@@ -2,22 +2,23 @@ import json
 import os
 
 from dotenv import load_dotenv
-from openai import OpenAI
+from groq import Groq
 
 from got.ai import AI
 from got.printer import Printer
 
 load_dotenv()
 printer = Printer()
-GROQ_TOKEN = os.getenv("GROQ_TOKEN")
-
-client = OpenAI(api_key=GROQ_TOKEN)
 
 
-class Groq(AI):
+class GroqCloud(AI):
     def __init__(self, model) -> None:
         self.model = model
         self.messages = []
+        GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+        if not GROQ_API_KEY:
+            raise ValueError("GROQ_API_KEY is not set in the environment variables")
+        self.client = Groq(api_key=GROQ_API_KEY)
 
     def add_message(self, content: str, role: str = "user") -> None:
         if isinstance(content, dict) or isinstance(content, list):
@@ -27,12 +28,17 @@ class Groq(AI):
 
     def prompt(self) -> str:
         printer.start_spinner("Creating commit messages...")
-        response = client.chat.completions.create(
+        completion = self.client.chat.completions.create(
             model=self.model,
             messages=self.messages,
+            temperature=1,
+            max_tokens=8192,
+            top_p=1,
+            stream=False,
             response_format={"type": "json_object"},
+            stop=None,
         )
-        content = response.choices[0].message.content
+        content = completion.choices[0].message.content
         json_content = json.loads(content)
         printer.stop_spinner()
         return json_content
