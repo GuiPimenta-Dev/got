@@ -11,6 +11,15 @@ class Git:
         self.commits = []
 
     @staticmethod
+    def add_files_to_stage():
+        try:
+            subprocess.run(["git", "add", "."], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"An error occurred while trying to add files to stage: {e}")
+            return False
+        return True
+    
+    @staticmethod
     def get_staged_files():
         try:
             result = subprocess.run(

@@ -14,10 +14,14 @@ def got():
 
 
 @got.command()
-def commit():
+@click.option("-a", is_flag=True, help="Also add to stage before committing", default=False)
+def commit(a):
   printer = Printer()
   git = Git()
   commit_handler = CommitHandler()
+
+  if a:
+      git.add_files_to_stage()
 
   commits = commit_handler.get_commit_message_suggestion()
 
