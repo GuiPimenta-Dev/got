@@ -3,7 +3,6 @@ import subprocess
 import shutil
 import os
 
-
 def read_version():
     """Reads the version from setup.py."""
     with open("setup.py", "r") as file:
