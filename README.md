@@ -18,7 +18,7 @@ pip install got-cli
 
 ## API Tokens
 
-GOT leverages powerful AI models from OpenAI's [Chat GPT]([Chat GPT](https://platform.openai.com/docs/guides/text-generation)) and [GROQ Cloud](https://console.groq.com/playground). To enable these features, you must configure API tokens as environment variables.
+GOT leverages powerful AI models from OpenAI's [Chat GPT](https://platform.openai.com/docs/guides/text-generation) and [GROQ Cloud](https://console.groq.com/playground). To enable these features, you must configure API tokens as environment variables.
 
 Before using the CLI, set up your environment variables based on the model you intend to use. These tokens will authenticate your requests to the respective services.
 
@@ -48,7 +48,7 @@ Options:
 
 ### Modifying Prompts
 
-To modify the prompts and examples used by the tool:
+To modify the prompts and examples used by the cli:
 
 ```bash
 got prompt --set-example
