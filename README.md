@@ -46,6 +46,8 @@ Options:
 - `-p`: Push changes to the remote repository after committing.
 - `-m`: Specify the language model to use for generating commit messages (Default: gpt-4-turbo).
 
+Available models: `gpt-3.5-turbo, gpt-4-turbo, gemma-7b-it, llama2-70b-4096, llama3-70b-8192, llama3-8b-8192, mixtral-8x7b-32768`
+
 ### Modifying Prompts
 
 To modify the prompts and examples used by the cli:
