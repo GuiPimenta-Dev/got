@@ -74,5 +74,5 @@ for commit in git.commits:
 
 click.echo()
 
-if click.confirm("Would you like to proceed?", abort=True):
+if click.confirm("Would you like to proceed?", default="y", abort=True):
   git.commit()
