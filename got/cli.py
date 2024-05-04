@@ -1,3 +1,4 @@
+import os
 import click
 from InquirerPy import inquirer
 from InquirerPy.separator import Separator
@@ -8,6 +9,7 @@ from got.commit import CommitHandler
 from got.git import Git
 from got.printer import Printer
 
+printer = Printer()
 
 @click.group()
 def got():
@@ -22,7 +24,6 @@ GROQ_MODELS = ["gemma-7b-it", "llama2-70b-4096", "llama3-70b-8192", "llama3-8b-8
 @click.option("-a", is_flag=True, help="Also add to stage before committing", default=False)
 @click.option("-m", help="LLM model", type=click.Choice([*OPENAI_MODELS, *GROQ_MODELS]), default="gpt-4-turbo")
 def commit(a, m):
-    printer = Printer()
     git = Git()
     commit_handler = CommitHandler(m)
 
@@ -97,6 +98,23 @@ def commit(a, m):
     if click.confirm("Would you like to proceed?", default="Y", abort=True):
         git.commit()
 
+
+@got.command()
+@click.option("--restore", is_flag=True, help="Restore prompts to default", default=False)
+@click.option("--set-example", is_flag=True, help="Set examples of the desired output", default=False)
+def prompt(restore, set_example):
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    if restore:
+        os.system(f"cp {current_dir}/prompts/default_prompt.txt {current_dir}/prompts/prompt.txt")
+        os.system(f"cp {current_dir}/prompts/default_examples.txt {current_dir}/prompts/examples.txt")
+        printer.print("Prompts restored to default.", "green", 1, 1)
+        exit()
+    
+    click.edit(filename=f"{current_dir}/prompts/prompt.txt")
+    if set_example:
+        click.edit(filename=f"{current_dir}/prompts/examples.txt")    
+
+    printer.print("The prompt has been set.", "green", 1, 1)
 
 if __name__ == "__main__":
     got()

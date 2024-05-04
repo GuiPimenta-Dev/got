@@ -10,9 +10,10 @@ class CommitHandler(Git):
     
     def get_commit_message_suggestion(self):
         commited_changes = {}
-        prompt = open("got/prompts/commit_prompt.txt", "r").read()
-        staged_files = self.get_staged_files()
         ai = AIFactory().create_ai(self.model)
+        prompt = open("got/prompts/prompt.txt", "r").read()
+        prompt += ai.commit_suffix
+        staged_files = self.get_staged_files()
         ai.add_message(prompt)
         for file in staged_files:
             try:
@@ -48,8 +49,9 @@ class CommitHandler(Git):
         return response["commits"]
 
     def retry_commit_message_suggestion(self, changes):
-        prompt = open("got/prompts/retry_commit_prompt.txt", "r").read()
         ai = AIFactory().create_ai(self.model)
+        prompt = open("got/prompts/prompt.txt", "r").read()
+        prompt += ai.retry_suffix
         ai.add_message(prompt)
         ai.add_message(changes)
         response = ai.prompt()
