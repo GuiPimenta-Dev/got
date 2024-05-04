@@ -45,6 +45,9 @@ class Printer:
         sys.stdout.flush()
         self.spinner["legend"] = legend
 
+    def br(self):
+        print()
+    
     def print(self, message, color="white", pre_break_lines=None, post_break_lines=None):
         if pre_break_lines:
             print("\n" * pre_break_lines)
