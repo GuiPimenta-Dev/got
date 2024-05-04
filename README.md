@@ -1,4 +1,4 @@
-# GOT - Git Operations Tool
+# GOT-CLI
 
 GOT is a command-line tool designed to enhance your git workflow by integrating AI-driven commit message suggestions. It leverages models from both OpenAI and Groq to suggest relevant commit messages based on the changes you've made.
 
@@ -10,12 +10,10 @@ GOT is a command-line tool designed to enhance your git workflow by integrating 
 
 ## Installation
 
-Clone the repository and install the required packages:
+Install from pip
 
 ```bash
-git clone https://github.com/GuiPimenta-Dev/got
-cd got
-pip install -r requirements.txt
+pip install got-cli
 ```
 
 ## API Tokens
@@ -30,7 +28,6 @@ export CHAT_GPT_TOKEN=<Your_Chat_GPT_API_Token>
 
 # Set the GROQ API key
 export GROQ_API_KEY=<Your_GROQ_API_Key>
-
 ```
 
 ## Usage
