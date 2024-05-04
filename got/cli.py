@@ -22,8 +22,9 @@ GROQ_MODELS = ["gemma-7b-it", "llama2-70b-4096", "llama3-70b-8192", "llama3-8b-8
 
 @got.command()
 @click.option("-a", is_flag=True, help="Also add to stage before committing", default=False)
+@click.option("-p", is_flag=True, help="Also push to remote after commiting", default=False)
 @click.option("-m", help="LLM model", type=click.Choice([*OPENAI_MODELS, *GROQ_MODELS]), default="gpt-4-turbo")
-def commit(a, m):
+def commit(a, p, m):
     git = Git()
     commit_handler = CommitHandler(m)
 
@@ -98,6 +99,8 @@ def commit(a, m):
     if click.confirm("Would you like to proceed?", default="Y", abort=True):
         git.commit()
 
+    if p:
+        git.push()
 
 @got.command()
 @click.option("--restore", is_flag=True, help="Restore prompts to default", default=False)
