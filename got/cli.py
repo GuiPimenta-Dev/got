@@ -60,10 +60,12 @@ def commit(a, p, m):
                     break
 
         if commit_message == "Skip":
+            printer.print("Skipping commit...", "yellow", 1, 1)
             continue
 
         if commit_message == "Abort":
-            break
+            printer.print("Aborted!", "red", 1, 1)
+            exit()
 
         if commit_message == "Manual":
             printer.br()
@@ -82,6 +84,10 @@ def commit(a, p, m):
                 commit_message = prompt("", default=commit_message, history=history)
 
         git.add_commit({"files_to_commit": commit["files"], "message": commit_message})
+
+    if not git.commits:
+        printer.print("Nothing to commit...", "white", 1, 1)
+        exit()
 
     printer.print("Commits to be made:", "blue", 1)
     for commit in git.commits:

@@ -8,7 +8,6 @@ class CommitHandler(Git):
     def __init__(self, model):
         self.model = model
     
-    
     def get_commit_message_suggestion(self):
         commited_changes = {}
         ai = AIFactory().create_ai(self.model)
