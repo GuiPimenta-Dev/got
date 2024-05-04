@@ -4,3 +4,4 @@ __pycache__/
 build/
 dist/
 got.egg-info/
+got_cli.egg-info/
