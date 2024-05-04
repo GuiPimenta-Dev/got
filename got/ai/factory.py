@@ -8,7 +8,7 @@ from got.ai.groq import GroqCloud
 load_dotenv()
 LLM_MODEL = os.environ.get("LLM_MODEL")
 
-OPENAI_MODELS = ["gpt-3.5-turbo"]
+OPENAI_MODELS = ["gpt-3.5-turbo", "gpt-4-turbo"]
 GROQ_MODELS = ["gemma-7b-it", "llama2-70b-4096", "llama3-70b-8192", "llama3-8b-8192", "mixtral-8x7b-32768"]
 
 
