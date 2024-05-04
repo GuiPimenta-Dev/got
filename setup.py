@@ -6,13 +6,17 @@ setup(
     packages=find_packages(),
     license="MIT",
     install_requires=[
+        "openai==1.25.1",
+        "groq==0.5.0",
         "click==8.1.3",
         "python-dotenv==1.0.1",
         "inquirerpy==0.3.4",
     ],
     include_package_data=True,
     package_data={
-        "got": [],
+        "got": [
+            "prompts/*"
+        ],
     },
     author="Guilherme Alves Pimenta",
     author_email="guialvespimenta27@gmail.com",
