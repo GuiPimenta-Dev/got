@@ -35,6 +35,15 @@ class Git:
         return True
 
     @staticmethod
+    def push():
+        try:
+            subprocess.run(["git", "push"], check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"An error occurred while trying to push to the remote repository: {e}")
+            return False
+        return True
+
+    @staticmethod
     def get_staged_files():
         try:
             result = subprocess.run(
