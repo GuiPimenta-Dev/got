@@ -11,17 +11,19 @@ class Commit(Git):
     ai.add_message(prompt)
     for file in staged_files:
         f = open(file, "r")
-        content = f.read()
-        ai.add_message({"file_path": file, "content": content})
-        commited_changes[file] = content
+        commit = f.read()
+        previous_commit = self.get_previous_commit(file)
+        diff = self.get_diff(file)
+        ai.add_message({"file_path": file, "previous_commit": previous_commit, "commit": commit, "diff": diff})
+        commited_changes[file] = {"previous_commit": previous_commit, "commit": commit, "diff": diff}
 
     response = ai.prompt()
     
     for commit in response["commits"]:
       changes = []
-      for file in commit["files"]:
+      for file in commit["files"]:        
         content = commited_changes[file]
-        changes.append({"file_path": file, "content": content})
+        changes.append({"file_path": file, **content})
       commit["changes"] = changes
       
     return response["commits"]

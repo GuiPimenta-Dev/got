@@ -38,6 +38,7 @@ class Git:
       files = commit["files_to_commit"]
       message = commit["message"]
       try:
+        printer.br()
         subprocess.run(
           ['git', 'commit', '-m', message, *files],
           check=True
@@ -46,3 +47,29 @@ class Git:
         print(f"An error occurred while trying to commit files: {e}")
         return False
     return True
+
+  @staticmethod
+  def get_previous_commit(file_path):
+    try:
+        result = subprocess.run(
+            ['git', 'show', f'HEAD~1:{file_path}'],
+            text=True,
+            capture_output=True,
+            check=True
+        )
+        return result.stdout
+    except subprocess.CalledProcessError as e:
+        return None
+  
+  @staticmethod
+  def get_diff(file_path):
+    try:
+        result = subprocess.run(
+            ['git', 'diff', file_path],
+            text=True,
+            capture_output=True,
+            check=True
+        )
+        return result.stdout
+    except subprocess.CalledProcessError as e:
+        return None
