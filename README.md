@@ -8,6 +8,8 @@ GOT is a command-line tool designed to enhance your git workflow by integrating 
 - **Interactive Commit Process**: Choose commit messages from suggested options or enter manually.
 - **Commit and Push**: Option to automatically add, commit, and push changes to a remote repository.
 
+![got](got.gif)
+
 ## Installation
 
 Install from pip
