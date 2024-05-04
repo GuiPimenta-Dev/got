@@ -15,8 +15,9 @@ GROQ_MODELS = ["gemma-7b-it", "llama2-70b-4096", "llama3-70b-8192", "llama3-8b-8
 class AIFactory:
 
     def create_ai(self, model) -> AI:
-
+        
         if model in OPENAI_MODELS:
             return ChatGPT(model)
+        
         elif model in GROQ_MODELS:
             return GroqCloud(model)
