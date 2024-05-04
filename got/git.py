@@ -9,6 +9,21 @@ printer = Printer()
 class Git:
     def __init__(self):
         self.commits = []
+    
+    def add_commit(self, commit):
+        self.commits.append(commit)
+
+    def commit(self):
+        for commit in self.commits:
+            files = commit["files_to_commit"]
+            message = commit["message"]
+            try:
+                printer.br()
+                subprocess.run(["git", "commit", "-m", message, *files], check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"An error occurred while trying to commit files: {e}")
+                return False
+        return True
 
     @staticmethod
     def add_files_to_stage():
@@ -39,21 +54,6 @@ class Git:
         except subprocess.CalledProcessError as e:
             print(f"An error occurred while trying to get staged files: {e}")
             return []
-
-    def add_commit(self, commit):
-        self.commits.append(commit)
-
-    def commit(self):
-        for commit in self.commits:
-            files = commit["files_to_commit"]
-            message = commit["message"]
-            try:
-                printer.br()
-                subprocess.run(["git", "commit", "-m", message, *files], check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"An error occurred while trying to commit files: {e}")
-                return False
-        return True
 
     @staticmethod
     def get_previous_commit(file_path):
