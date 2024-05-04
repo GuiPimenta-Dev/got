@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
+import os
 
 
 class AI(ABC):
-    examples = open("got/prompts/examples.txt", "r").read()
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    examples = open(current_dir + "/../prompts/examples.txt", "r").read()
     
     @abstractmethod
     def prompt(self, prompt: str) -> str:
@@ -66,7 +68,7 @@ Here is the format in which I will send you the file details:
 Please focus primarily on the `commit` key as it reflects the current changes being made. The `previous_commit` and `diff` keys are provided to give context and help you understand the progression of the changes.
 
 The response should also be in JSON format, structured as follows: 
-{
+{{
   "messages": {self.examples}
-}
+}}
 """

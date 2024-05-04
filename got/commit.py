@@ -1,3 +1,4 @@
+import os
 from got.ai.factory import AIFactory
 from got.git import Git
 
@@ -11,7 +12,8 @@ class CommitHandler(Git):
     def get_commit_message_suggestion(self):
         commited_changes = {}
         ai = AIFactory().create_ai(self.model)
-        prompt = open("got/prompts/prompt.txt", "r").read()
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        prompt = open(current_dir + "/prompts/prompt.txt", "r").read()
         prompt += ai.commit_suffix
         staged_files = self.get_staged_files()
         ai.add_message(prompt)
@@ -21,6 +23,9 @@ class CommitHandler(Git):
                 commit = f.read()
             except FileNotFoundError:
                 commit = "File Deleted!"
+            except:
+                raise Exception(f"An error occurred while trying to commit: {file}")
+            
             previous_commit = self.get_previous_commit(file)
             diff = self.get_diff(file)
             ai.add_message(
@@ -50,7 +55,8 @@ class CommitHandler(Git):
 
     def retry_commit_message_suggestion(self, changes):
         ai = AIFactory().create_ai(self.model)
-        prompt = open("got/prompts/prompt.txt", "r").read()
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        prompt = open(current_dir + "/prompts/prompt.txt", "r").read()
         prompt += ai.retry_suffix
         ai.add_message(prompt)
         ai.add_message(changes)
