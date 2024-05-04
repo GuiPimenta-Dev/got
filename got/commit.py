@@ -3,11 +3,16 @@ from got.git import Git
 
 
 class CommitHandler(Git):
+    
+    def __init__(self, model):
+        self.model = model
+    
+    
     def get_commit_message_suggestion(self):
         commited_changes = {}
         prompt = open("got/prompts/commit_prompt.txt", "r").read()
         staged_files = self.get_staged_files()
-        ai = AIFactory().create_ai()
+        ai = AIFactory().create_ai(self.model)
         ai.add_message(prompt)
         for file in staged_files:
             try:
@@ -44,7 +49,7 @@ class CommitHandler(Git):
 
     def retry_commit_message_suggestion(self, changes):
         prompt = open("got/prompts/retry_commit_prompt.txt", "r").read()
-        ai = AIFactory().create_ai()
+        ai = AIFactory().create_ai(self.model)
         ai.add_message(prompt)
         ai.add_message(changes)
         response = ai.prompt()
