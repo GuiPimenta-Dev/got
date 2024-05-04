@@ -1,4 +1,4 @@
-# GOT-CLI
+# GOT
 
 GOT is a command-line tool designed to enhance your git workflow by integrating AI-driven commit message suggestions. It leverages models from both OpenAI and Groq to suggest relevant commit messages based on the changes you've made.
 
