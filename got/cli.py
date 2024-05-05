@@ -33,27 +33,13 @@ def commit(a, p, m):
     commits = commit_handler.get_commit_message_suggestion()
 
     for commit in commits:
-        lines = max(len(string) for string in commit["messages"])
-        choices = [*commit["messages"], Separator(lines * "-"), "Manual", "Retry", "Skip", "Abort"]
-
-        click.echo()
-        commit_message = inquirer.select(
-            message=f"Select a commit message for the following files: {commit['files']}",
-            choices=choices,
-        ).execute()
+        commit_message = printer.select_commit_message(commit["messages"], commit["changes"])
 
 
         if commit_message == "Retry":
             while True:
                 messages = commit_handler.retry_commit_message_suggestion(commit["changes"])
-                lines = max(len(string) for string in messages)
-                choices = [*messages, Separator(lines * "-"), "Manual", "Retry", "Skip", "Abort"]
-
-                click.echo()
-                commit_message = inquirer.select(
-                    message=f"Select a commit message for the following files: {commit['files']}",
-                    choices=choices,
-                ).execute()
+                commit_message = printer.select_commit_message(messages, commit["changes"])
 
                 if commit_message != "Retry":
                     break

@@ -23,12 +23,11 @@ Here is the format in which I will send you the file details:
   ```json
   {{
     "file_path": "example/path",
-    "previous_commit": "previous commit file content, if there is some"
     "commit": "current commit file content",
     "diff": "diff from current content from previous, if there is some"
   }}
   ```
-Please focus primarily on the `commit` key as it reflects the current changes being made. The `previous_commit` and `diff` keys are provided to give context and help you understand the progression of the changes.
+Please focus primarily on the `commit` key as it reflects the current changes being made. The `diff` key is provided to give context and help you understand the progression of the changes.
 
 Your response should also be in JSON format, containing a list of file groups with their associated commit messages. Here’s how the response should be structured:
 
@@ -60,12 +59,11 @@ Here is the format in which I will send you the file details:
  ```json
   {{
     "file_path": "example/path",
-    "previous_commit": "previous commit file content, if there is some"
     "commit": "current commit file content",
     "diff": "diff from current content from previous, if there is some"
   }}
 ```
-Please focus primarily on the `commit` key as it reflects the current changes being made. The `previous_commit` and `diff` keys are provided to give context and help you understand the progression of the changes.
+Please focus primarily on the `commit` key as it reflects the current changes being made. The `diff` key is provided to give context and help you understand the progression of the changes.
 
 The response should also be in JSON format, structured as follows: 
 {{

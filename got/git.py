@@ -81,7 +81,7 @@ class Git:
     @staticmethod
     def get_diff(file_path):
         try:
-            result = subprocess.run(["git", "diff", file_path], text=True, capture_output=True, check=True)
+            result = subprocess.run(["git", "diff", "--color-words", "HEAD", file_path], text=True, capture_output=True, check=True)
             return result.stdout
         except subprocess.CalledProcessError as e:
             return None

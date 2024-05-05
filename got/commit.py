@@ -30,7 +30,6 @@ class CommitHandler(Git):
             ai.add_message(
                 {
                     "file_path": file,
-                    "previous_commit": previous_commit,
                     "commit": commit,
                     "diff": diff,
                 }
