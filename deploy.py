@@ -1,7 +1,8 @@
-import re
-import subprocess
-import shutil
 import os
+import re
+import shutil
+import subprocess
+
 
 def read_version():
     """Reads the version from setup.py."""
