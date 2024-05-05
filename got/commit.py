@@ -2,6 +2,7 @@ import os
 
 from got.ai.factory import AIFactory
 from got.git import Git
+from got.printer import Printer
 
 
 class CommitHandler(Git):
@@ -25,7 +26,9 @@ class CommitHandler(Git):
             except FileNotFoundError:
                 commit = "File Deleted!"
             except:
-                raise Exception(f"An error occurred while trying to commit: {file}")
+                printer = Printer()
+                printer.print(f"An error occurred while trying to read the file {file}", "red", 1, 1)
+                exit()
 
             previous_commit = self.get_previous_commit(file)
             diff = self.get_diff(file)
