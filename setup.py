@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 #
 setup(
     name="got-cli",
-    version="0.0.22",
+    version="0.0.23",
     packages=find_packages(),
     license="MIT",
     install_requires=[
