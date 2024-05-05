@@ -4,7 +4,7 @@ GOT is a command-line tool designed to enhance your git workflow by integrating 
 
 ## Features
 
-- **AI-Driven Commit Suggestions**: Utilize models like GPT-3.5, GPT-4, and various Groq models to generate commit messages.
+- **AI-Driven Commit Suggestions**: Utilize models like GPT-3.5, GPT-4, and Groq open source models to generate commit messages.
 - **Interactive Commit Process**: Choose commit messages from suggested options or enter manually.
 - **Commit and Push**: Option to automatically add, commit, and push changes to a remote repository.
 
@@ -20,7 +20,7 @@ pip install got-cli
 
 ## API Tokens
 
-GOT leverages powerful AI models from OpenAI's [Chat GPT](https://platform.openai.com/docs/guides/text-generation) and Open source models from [GROQ Cloud](https://console.groq.com/playground). To enable these features, you must configure API tokens as environment variables.
+GOT leverages powerful AI models from OpenAI's [Chat GPT](https://platform.openai.com/docs/guides/text-generation) and [GROQ Cloud](https://console.groq.com/playground). To enable these features, you must configure the API tokens as environment variables.
 
 Before using the CLI, set up your environment variables based on the model you intend to use. These tokens will authenticate your requests to the respective services.
 
@@ -44,10 +44,10 @@ got commit -a -p
 
 Options:
 
-- `-a`: Automatically stage all changes before committing.
+- `-a`: Add all changes to stage before committing.
 - `-p`: Push changes to the remote repository after committing.
 - `-m`: Specify the language model to use for generating commit messages (Default: gpt-4-turbo).
-- `-t`: Specify maximum of tokens to be used by the model (Default: 4096).
+- `-t`: Specify maximum amount of tokens to be used by the model (Default: 4096).
 
   Available models: `gpt-3.5-turbo, gpt-4-turbo, gemma-7b-it, llama2-70b-4096, llama3-70b-8192, llama3-8b-8192, mixtral-8x7b-32768`
 
