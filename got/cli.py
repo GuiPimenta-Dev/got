@@ -88,7 +88,7 @@ def commit(a, p, m):
         printer.print("Nothing to commit...", "white", 1, 1)
         exit()
 
-    printer.print("Commits to be made:", "blue", 1)
+    printer.print("COMMITS:", "cyan", 1)
     for commit in git.commits:
         printer.print("------------------------ + ------------------------", "gray", 1)
 
