@@ -5,16 +5,13 @@ certifi==2024.2.2
 click==8.1.3
 distro==1.9.0
 exceptiongroup==1.2.1
-got-cli @ file:///Users/guialves/personal_projects/got
 groq==0.5.0
 h11==0.14.0
 httpcore==1.0.5
 httpx==0.27.0
 idna==3.7
-inquirerpy==0.3.4
 openai==1.25.1
 pfzy==0.3.4
-prompt-toolkit==3.0.43
 pydantic==2.7.1
 pydantic_core==2.18.2
 python-dotenv==1.0.1
