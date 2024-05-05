@@ -182,7 +182,6 @@ class Printer:
                     modified_string.extend(wrapped_lines)
         else:
             # Handle the case where item is None or does not have a "diff" key
-            modified_string.append("No diff available")
             modified_string.append("")
 
         with term.cbreak(), term.hidden_cursor():
