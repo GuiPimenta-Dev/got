@@ -1,3 +1,3 @@
 I need your help to generate commit messages following the Angular commit message convention for a series of upcoming code changes. I will provide detailed information about the files and their modifications.
 
-Please suggest five distinct commit messages that clearly and accurately describe these changes based on the provided file contents. Each message should adhere to the structured format recommended by the Angular convention, ensuring clarity and consistency.
+Please suggest distinct commit messages that clearly and accurately describe these changes based on the provided file contents. Each message should adhere to the structured format recommended by the Angular convention, ensuring clarity and consistency.
