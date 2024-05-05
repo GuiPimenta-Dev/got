@@ -42,6 +42,7 @@ def commit(a, p, m, t):
 
         if commit_message == "Retry":
             while True:
+                print(term.clear)
                 messages = commit_handler.retry_commit_message_suggestion(commit["changes"])
                 commit_message = printer.select_commit_message(messages, commit["changes"])
 
