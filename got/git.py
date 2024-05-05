@@ -2,14 +2,13 @@ import subprocess
 
 from got.printer import Printer
 
-
 printer = Printer()
 
 
 class Git:
     def __init__(self):
         self.commits = []
-    
+
     def add_commit(self, commit):
         self.commits.append(commit)
 
@@ -57,7 +56,7 @@ class Git:
             staged_files = [file for file in staged_files if file]
 
             if not staged_files:
-                printer.print("No files are staged for commit.", "red", 1, 1)
+                printer.print("No files are staged for commit.", "red", 0, 1)
                 exit()
 
             return staged_files
@@ -81,7 +80,9 @@ class Git:
     @staticmethod
     def get_diff(file_path):
         try:
-            result = subprocess.run(["git", "diff", "--color-words", "HEAD", file_path], text=True, capture_output=True, check=True)
+            result = subprocess.run(
+                ["git", "diff", "--color-words", "HEAD", file_path], text=True, capture_output=True, check=True
+            )
             return result.stdout
         except subprocess.CalledProcessError as e:
             return None

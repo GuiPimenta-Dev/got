@@ -1,14 +1,14 @@
 import os
+
 import click
-from InquirerPy import inquirer
-from InquirerPy.separator import Separator
-from prompt_toolkit.history import InMemoryHistory
-import prompt_toolkit
+from blessed import Terminal
+
 from got.commit import CommitHandler
 from got.git import Git
 from got.printer import Printer
 
 printer = Printer()
+
 
 @click.group()
 def got():
@@ -23,9 +23,14 @@ GROQ_MODELS = ["gemma-7b-it", "llama2-70b-4096", "llama3-70b-8192", "llama3-8b-8
 @click.option("-a", is_flag=True, help="Also add to stage before committing", default=False)
 @click.option("-p", is_flag=True, help="Also push to remote after commiting", default=False)
 @click.option("-m", help="LLM model", type=click.Choice([*OPENAI_MODELS, *GROQ_MODELS]), default="gpt-4-turbo")
-def commit(a, p, m):
+@click.option("-t", help="Max tokens to be used by the model", default=4096)
+def commit(a, p, m, t):
+    term = Terminal()
+    print(term.enter_fullscreen)
+    print(term.clear)
+    
     git = Git()
-    commit_handler = CommitHandler(m)
+    commit_handler = CommitHandler(m, t)
 
     if a:
         git.add_files_to_stage()
@@ -34,7 +39,6 @@ def commit(a, p, m):
 
     for commit in commits:
         commit_message = printer.select_commit_message(commit["messages"], commit["changes"])
-
 
         if commit_message == "Retry":
             while True:
@@ -45,28 +49,16 @@ def commit(a, p, m):
                     break
 
         if commit_message == "Skip":
-            printer.print("Skipping commit...", "yellow", 1, 1)
             continue
 
         if commit_message == "Abort":
-            printer.print("Aborted!", "red", 1, 1)
             exit()
 
         if commit_message == "Manual":
-            printer.br()
-            commit_message = prompt_toolkit.prompt("Enter a commit message: ")
+            commit_message = click.edit(editor="vim", require_save=False)
 
         else:
-            change_commit_message = inquirer.select(
-                message=f"Would you like to edit the selected message?",
-                choices=["No", "Yes"],
-            ).execute()
-
-            if change_commit_message == "Yes":
-                history = InMemoryHistory()
-                history.append_string(commit_message)
-                click.echo()
-                commit_message = prompt_toolkit.prompt("", default=commit_message, history=history)
+            commit_message = printer.edit_commit_message(commit_message, commit["changes"])
 
         git.add_commit({"files_to_commit": commit["files"], "message": commit_message})
 
@@ -74,28 +66,13 @@ def commit(a, p, m):
         printer.print("Nothing to commit...", "white", 1, 1)
         exit()
 
-    printer.print("COMMITS:", "cyan", 1)
-    for commit in git.commits:
-        printer.print("------------------------ + ------------------------", "gray", 1)
-
-        printer.print("Files:", "white", 1, 1)
-        for file in commit["files_to_commit"]:
-            printer.print(f"  {file}", "green")
-
-        printer.print("Message:", "white", 1, 1)
-        printer.print(f"  {commit['message']}", "yellow")
-
-
-    try:
-        printer.br()
-        click.confirm("Would you like to proceed?", default="Y", abort=True)
+    confirmed = printer.confirm_commits(git.commits)
+    if confirmed:
         git.commit()
-    except click.Abort:
-        printer.print("Aborted!", "red", 1, 1)
-        exit()
 
     if p:
         git.push()
+
 
 @got.command()
 @click.option("--restore", is_flag=True, help="Restore prompts to default", default=False)
@@ -107,12 +84,13 @@ def prompt(restore, set_example):
         os.system(f"cp {current_dir}/prompts/default_examples.txt {current_dir}/prompts/examples.txt")
         printer.print("Prompts restored to default.", "green", 1, 1)
         exit()
-    
+
     click.edit(filename=f"{current_dir}/prompts/prompt.txt")
     if set_example:
-        click.edit(filename=f"{current_dir}/prompts/examples.txt")    
+        click.edit(filename=f"{current_dir}/prompts/examples.txt")
 
     printer.print("The prompt has been set.", "green", 1, 1)
+
 
 if __name__ == "__main__":
     got()
