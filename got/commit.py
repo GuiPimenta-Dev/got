@@ -32,13 +32,10 @@ class CommitHandler(Git):
             ai.add_message(
                 {
                     "file_path": file,
-                    "commit": commit,
                     "diff": diff,
                 }
             )
             commited_changes[file] = {
-                "previous_commit": previous_commit,
-                "commit": commit,
                 "diff": diff,
             }
 
