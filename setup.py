@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-
+#
 setup(
     name="got-cli",
     version="0.0.14",
@@ -11,7 +11,8 @@ setup(
         "click==8.1.3",
         "python-dotenv==1.0.1",
         "inquirerpy==0.3.4",
-        "prompt-toolkit==3.0.43"
+        "prompt-toolkit==3.0.43",
+        "blessed==1.20.0"
     ],
     include_package_data=True,
     package_data={
