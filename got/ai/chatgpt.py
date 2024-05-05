@@ -12,8 +12,9 @@ printer = Printer()
 
 
 class ChatGPT(AI):
-    def __init__(self, model) -> None:
+    def __init__(self, model, max_tokens) -> None:
         self.model = model
+        self.max_tokens = max_tokens
         self.messages = []
         CHAT_GPT_TOKEN = os.getenv("CHAT_GPT_TOKEN")
         if not CHAT_GPT_TOKEN:
@@ -32,6 +33,7 @@ class ChatGPT(AI):
             model=self.model,
             messages=self.messages,
             response_format={"type": "json_object"},
+            max_tokens=self.max_tokens,
         )
         content = response.choices[0].message.content
         json_content = json.loads(content)

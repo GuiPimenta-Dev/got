@@ -1,11 +1,11 @@
-from abc import ABC, abstractmethod
 import os
+from abc import ABC, abstractmethod
 
 
 class AI(ABC):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     examples = open(current_dir + "/../prompts/examples.txt", "r").read()
-    
+
     @abstractmethod
     def prompt(self, prompt: str) -> str:
         pass

@@ -12,8 +12,9 @@ printer = Printer()
 
 
 class GroqCloud(AI):
-    def __init__(self, model) -> None:
+    def __init__(self, model, max_tokens) -> None:
         self.model = model
+        self.max_tokens = max_tokens
         self.messages = []
         GROQ_API_KEY = os.getenv("GROQ_API_KEY")
         if not GROQ_API_KEY:
@@ -32,7 +33,7 @@ class GroqCloud(AI):
             model=self.model,
             messages=self.messages,
             temperature=1,
-            max_tokens=8192,
+            max_tokens=self.max_tokens,
             top_p=1,
             stream=False,
             response_format={"type": "json_object"},
